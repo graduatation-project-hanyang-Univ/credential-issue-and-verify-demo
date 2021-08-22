@@ -1,38 +1,12 @@
-import React, { useEffect, useState } from "react";
-import QRCode from "react-qr-code";
-import { createInvitation } from "../utils/AxiosWithAcapy";
+import React from 'react';
 
 const Home = () => {
-  const [invitationUrl, setInvitationUrl] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchInvitationUrl = async () => {
-      try {
-        setError(null);
-        setInvitationUrl(null);
-        setLoading(true);
-        const response = await createInvitation();
-        setInvitationUrl(response.data.invitation_url);
-      } catch (e) {
-        setError(e);
-      }
-      setLoading(false);
-    };
-    fetchInvitationUrl();
-  }, []);
-
   return (
     <div>
-      <h1>홈</h1>
-      <p>이곳은 홈이에요. 가장 먼저 보여지는 페이지죠.</p>
-      {(() => {
-        if (loading) return <div>로딩중..</div>;
-        if (error) return <div>에러가 발생했습니다</div>;
-        if (!invitationUrl) return null;
-        return <QRCode value={invitationUrl} />;
-      })()}
+      <h1>VC 발급 및 VP 검증을 위한 데모페이지 입니다.</h1>
+      <br />
+      <p>위의 navigation bar을 이용해 VC를 발급 및 VP 검증에 대한 데모를 수행할 수 있습니다.</p>
+      <p>이를 위해 저희가 만든 DID 어플리케이션이 필요합니다.</p>
     </div>
   );
 };
