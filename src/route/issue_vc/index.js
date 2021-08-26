@@ -85,11 +85,9 @@ const IssueVC = () => {
         return <QRCode value={invitation.invitation_url} />;
       })()}
       <br />
-      {JSON.stringify(invitation)}
+      {isConnected ? '연결되었습니다. 어플리케이션을 통해 Credential 발급 요청을 보내주세요.' : ''}
       <br />
-      {isConnected ? '연결되었습니다.' : '완전히 연결되지 않았습니다. 잠시 기다려주세요.'}
-      <br />
-      {isCredentialIssued ? '요청하신 Credential이 발급되었습니다.' : '아직 Credential이 발급되지 않았습니다.'}
+      {isCredentialIssued ? '요청하신 Credential이 발급되었습니다.' : ''}
     </div>
   );
 };
