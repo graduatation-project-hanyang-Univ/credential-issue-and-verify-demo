@@ -26,7 +26,27 @@ async function getCredentialissuanceRecords(connId) {
       connection_id: connId,
     },
   });
+
   return res;
 }
 
-export { createInvitation, getConnection, getCredentialissuanceRecords };
+async function getCredentialVerificationRecords(connId) {
+  const res = await axiosWithAcapy.get('/present-proof/records', {
+    params: {
+      connection_id: connId,
+    },
+  });
+
+  return res;
+}
+
+async function sendProofRequest(connId, proofRequest) {
+  const res = await axiosWithAcapy.post(`/present-proof/send-request`, {
+    connection_id: connId,
+    proof_request: proofRequest,
+  });
+
+  return res;
+}
+
+export { createInvitation, getConnection, getCredentialissuanceRecords, sendProofRequest, getCredentialVerificationRecords };
