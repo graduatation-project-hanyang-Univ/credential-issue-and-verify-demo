@@ -35,9 +35,9 @@ const VerifyVP = () => {
         while (true) {
           const response = await getConnection(newInvitation.connection_id);
           console.log(response);
-          const { state, rfc23_state: rfc23State } = response.data;
+          const { state } = response.data;
 
-          if (rfc23State === 'response-sent' && state === 'response') {
+          if (state === 'response' || state === 'active') {
             setIsConnected(true);
             return;
           }
@@ -96,13 +96,11 @@ const VerifyVP = () => {
         return <QRCode value={invitation.invitation_url} />;
       })()}
       <br />
-      {JSON.stringify(invitation)}
+      {isConnected ? '연결되었습니다.' : ''}
       <br />
-      {isConnected ? '연결되었습니다.' : '완전히 연결되지 않았습니다. 잠시 기다려주세요.'}
+      {isVPRequestSended ? 'VP Request가 전송되었습니다.' : ''}
       <br />
-      {isVPRequestSended ? 'VP Request가 전송되었습니다.' : '아직 VP Request가 전송되지 않았습니다.'}
-      <br />
-      {isVerified ? '전송한 VP Request에 대해 수신받은 VP가 검증되었습니다.' : 'VP 검증이 완료되지 않았습니다.'}
+      {isVerified ? '전송한 VP Request에 대해 수신받은 VP가 검증되었습니다.' : ''}
     </div>
   );
 };

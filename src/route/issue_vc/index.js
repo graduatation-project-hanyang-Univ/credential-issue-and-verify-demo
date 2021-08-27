@@ -35,9 +35,9 @@ const IssueVC = () => {
         while (true) {
           const response = await getConnection(newInvitation.connection_id);
           console.log(response);
-          const { state, rfc23_state: rfc23State } = response.data;
+          const { state } = response.data;
 
-          if (rfc23State === 'response-sent' && state === 'response') {
+          if (state === 'response' || state === 'active') {
             setIsConnected(true);
             return;
           }
