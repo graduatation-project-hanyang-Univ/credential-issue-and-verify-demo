@@ -6,6 +6,7 @@ const axiosWithAcapy = axios.create({
 
 async function createInvitation() {
   const res = await axiosWithAcapy.post('/connections/create-invitation', {
+    my_label: 'blocketing demo',
     params: {
       auto_accept: true,
     },
