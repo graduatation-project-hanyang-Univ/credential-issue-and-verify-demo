@@ -49,4 +49,14 @@ async function sendProofRequest(connId, proofRequest) {
   return res;
 }
 
-export { createInvitation, getConnection, getCredentialissuanceRecords, sendProofRequest, getCredentialVerificationRecords };
+async function sendCredential(connId, credentialProposal) {
+  const res = await axiosWithAcapy.post('/issue-credential/send', {
+    auto_remove: false,
+    connection_id: connId,
+    credential_proposal: credentialProposal,
+  });
+
+  return res;
+}
+
+export { createInvitation, getConnection, getCredentialissuanceRecords, sendProofRequest, getCredentialVerificationRecords, sendCredential };

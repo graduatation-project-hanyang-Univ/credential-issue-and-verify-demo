@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { createInvitation, getConnection, getCredentialissuanceRecords } from '../../apis/AxiosWithAcapy';
+import { createInvitation, getConnection, getCredentialissuanceRecords, sendCredential } from '../../apis/AxiosWithAcapy';
 import QRCode from 'react-qr-code';
 import { sleep } from '../../utils/utils';
 
@@ -39,6 +39,27 @@ const IssueVC = () => {
 
           if (state === 'response' || state === 'active') {
             setIsConnected(true);
+            await sendCredential(newInvitation.connection_id, {
+              '@type': 'issue-credential/1.0/credential-preview',
+              attributes: [
+                {
+                  name: 'age',
+                  value: '25',
+                },
+                {
+                  name: 'sex',
+                  value: 'male',
+                },
+                {
+                  name: 'height',
+                  value: '180',
+                },
+                {
+                  name: 'name',
+                  value: 'taeyong',
+                },
+              ],
+            });
             return;
           }
           await sleep(5000);
@@ -85,7 +106,7 @@ const IssueVC = () => {
         return <QRCode value={invitation.invitation_url} />;
       })()}
       <br />
-      {isConnected ? '연결되었습니다. 어플리케이션을 통해 Credential 발급 요청을 보내주세요.' : ''}
+      {isConnected ? '연결되었습니다. 어플리케이션에서 VC 정보를 확인해 주세요' : ''}
       <br />
       {isCredentialIssued ? '요청하신 Credential이 발급되었습니다.' : ''}
     </div>
