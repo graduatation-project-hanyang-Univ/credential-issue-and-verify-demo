@@ -51,7 +51,7 @@ const VerifyVP = () => {
     const sendVPRequest = async () => {
       try {
         setIsVPRequestSended(false);
-        await sendProofRequest(newInvitation.connection_id, makeProofRequest(process.env.REACT_APP_SCHEMA_ID));
+        await sendProofRequest(newInvitation.connection_id, makeProofRequest(process.env.REACT_APP_INDY_DID));
         setIsVPRequestSended(true);
       } catch (e) {
         setError(e);
@@ -105,7 +105,7 @@ const VerifyVP = () => {
   );
 };
 
-function makeProofRequest(schemaId) {
+function makeProofRequest(did) {
   return {
     name: 'test-proof-req',
     version: '1.0',
@@ -114,7 +114,7 @@ function makeProofRequest(schemaId) {
         name: 'name',
         restrictions: [
           {
-            schema_id: schemaId,
+            issuer_did: did,
           },
         ],
       },
@@ -126,7 +126,7 @@ function makeProofRequest(schemaId) {
         p_value: 18,
         restrictions: [
           {
-            schema_id: schemaId,
+            issuer_did: did,
           },
         ],
       },
