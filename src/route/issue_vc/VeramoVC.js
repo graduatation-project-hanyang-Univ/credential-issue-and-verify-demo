@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 import QRCode from 'react-qr-code';
-import { getUportIssuanceQrCode } from '../../apis/AxiosWithServer';
+import { getVeramoVCJWT } from '../../apis/AxiosWithServer';
 
-const IssueUportVC = () => {
+const IssueVeramoVC = () => {
   const [qrCode, setQRCode] = useState(null);
 
   useEffect(async () => {
-    const res = await getUportIssuanceQrCode();
+    const res = await getVeramoVCJWT();
     console.log(res.data);
     setQRCode(res.data);
   }, []);
@@ -15,4 +15,4 @@ const IssueUportVC = () => {
   return <div>{qrCode ? <QRCode value={qrCode} /> : ''}</div>;
 };
 
-export default IssueUportVC;
+export default IssueVeramoVC;

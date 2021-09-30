@@ -5,15 +5,15 @@ import { Nav, Navbar } from 'react-bootstrap';
 import IssueVC from './route/issue_vc';
 import VerifyVP from './route/verify_vp';
 import Home from './route/Home';
-import IssueUportVC from './route/issue_vc/UportVC';
-import VerifyUportVP from './route/verify_vp/UportVP';
+import IssueVeramoVC from './route/issue_vc/VeramoVC';
+import VerifyVeramoVP from './route/verify_vp/VeramoVP';
 
 const PATH = {
   ROOT: '/',
   ISSUE_VC: '/issue-vc',
-  ISSUE_UPORT_VC: '/issue-uport-vc',
+  ISSUE_VERAMO_VC: '/issue-veramo-vc',
   VERIFY_VP: '/verify-vp',
-  VERIFY_UPORT_VP: '/verify-uport-vp',
+  VERIFY_VERAMO_VP: '/verify-veramo-vp',
 };
 
 function App() {
@@ -23,8 +23,8 @@ function App() {
       <Route exact path={PATH.ROOT} component={Home} />
       <Route exact path={PATH.ISSUE_VC} component={IssueVC} />
       <Route exact path={PATH.VERIFY_VP} component={VerifyVP} />
-      <Route exact path={PATH.ISSUE_UPORT_VC} component={IssueUportVC} />
-      <Route exact path={PATH.VERIFY_UPORT_VP} component={VerifyUportVP} />
+      <Route exact path={PATH.ISSUE_VERAMO_VC} component={IssueVeramoVC} />
+      <Route exact path={PATH.VERIFY_VERAMO_VP} component={VerifyVeramoVP} />
     </div>
   );
 }
@@ -37,8 +37,8 @@ function Navigator() {
         <Nav className="mr-auto">
           <Nav.Link href={PATH.ISSUE_VC}>Issue VC</Nav.Link>
           <Nav.Link href={PATH.VERIFY_VP}>Verify VP</Nav.Link>
-          <Nav.Link href={PATH.ISSUE_UPORT_VC}>Issue Uport VC</Nav.Link>
-          <Nav.Link href={PATH.VERIFY_UPORT_VP}>Verify Uport VP</Nav.Link>
+          <Nav.Link href={PATH.ISSUE_VERAMO_VC}>Issue Veramo VC</Nav.Link>
+          <Nav.Link href={PATH.VERIFY_VERAMO_VP}>Verify Veramo VP</Nav.Link>
         </Nav>
       </Navbar>
     </>

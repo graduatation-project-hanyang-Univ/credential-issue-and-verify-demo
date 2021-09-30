@@ -4,16 +4,16 @@ const axiosWithServer = axios.create({
   baseURL: process.env.REACT_APP_WEBHOOK_ENDPOINT,
 });
 
-async function getUportIssuanceQrCode() {
-  const res = await axiosWithServer.post('/uports/qr-code/issuance');
+async function getVeramoVCJWT() {
+  const res = await axiosWithServer.post('/veramo/qr-code/issuance');
 
   return res;
 }
 
-async function getUportVerificationQrCode() {
-  const res = await axiosWithServer.post('/uports/qr-code/verification');
+async function getVeramoVPRequestJWT() {
+  const res = await axiosWithServer.post('/veramo/qr-code/verification');
 
   return res;
 }
 
-export { getUportIssuanceQrCode, getUportVerificationQrCode };
+export { getVeramoVCJWT, getVeramoVPRequestJWT };
