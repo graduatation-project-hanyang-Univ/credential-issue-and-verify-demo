@@ -4,8 +4,15 @@ const axiosWithServer = axios.create({
   baseURL: process.env.REACT_APP_WEBHOOK_ENDPOINT,
 });
 
-async function getVeramoVCJWT() {
-  const res = await axiosWithServer.post('/veramo/qr-code/issuance');
+async function getVeramoVCJWT(infos) {
+  const { name, company, seat, date } = infos;
+
+  const res = await axiosWithServer.post('/veramo/qr-code/issuance', {
+    name,
+    company,
+    seat,
+    date,
+  });
 
   return res;
 }
