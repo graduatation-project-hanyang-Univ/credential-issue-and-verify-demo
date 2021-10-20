@@ -1,21 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import { createInvitation, getConnection, getCredentialissuanceRecords, sendCredential } from '../../apis/AxiosWithAcapy';
 import QRCode from 'react-qr-code';
+import React, { useState } from 'react';
+import { Button, Col, Container, Form, Row, Table } from 'react-bootstrap';
+import { createInvitation, getConnection, getCredentialissuanceRecords, sendCredential } from '../../apis/AxiosWithAcapy';
 import { sleep } from '../../utils/utils';
 
-const IssueVC = () => {
+const IssueVeramoVC = () => {
+  const [name, setName] = useState('');
+  const [company, setCompany] = useState('');
+  const [seat, setSeat] = useState('');
+  const [date, setDate] = useState(0);
+  const [qrCode, setQRCode] = useState('');
   const [invitation, setInvitation] = useState({});
   const [isConnected, setIsConnected] = useState(false);
   const [isCredentialIssued, setIsCredentialIssued] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
-  useEffect(async () => {
+  const [isGenerated, setIsGenerated] = useState(false);
+
+  const changeFunc = (res) => {
+    const newValue = res.target.value;
+
+    switch (res.target.name) {
+      case 'name':
+        setName(newValue);
+        break;
+      case 'company':
+        setCompany(newValue);
+        break;
+      case 'seat':
+        setSeat(newValue);
+        break;
+      case 'date':
+        setDate(newValue);
+    }
+  };
+
+  const entireIssuanceFlow = async () => {
     let newInvitation;
     const fetchInvitationUrl = async () => {
       try {
-        setError(null);
-        setLoading(true);
         setInvitation({});
         const response = await createInvitation();
         newInvitation = response.data;
@@ -23,9 +45,8 @@ const IssueVC = () => {
 
         await setInvitation(newInvitation);
       } catch (e) {
-        setError(e);
+        console.log(e);
       }
-      setLoading(false);
     };
 
     const stopUntilConnected = async () => {
@@ -43,20 +64,20 @@ const IssueVC = () => {
               '@type': 'issue-credential/1.0/credential-preview',
               attributes: [
                 {
-                  name: 'age',
-                  value: '25',
-                },
-                {
-                  name: 'sex',
-                  value: 'male',
-                },
-                {
-                  name: 'height',
-                  value: '180',
-                },
-                {
                   name: 'name',
-                  value: 'taeyong',
+                  value: name,
+                },
+                {
+                  name: 'company',
+                  value: company,
+                },
+                {
+                  name: 'seat',
+                  value: seat,
+                },
+                {
+                  name: 'date',
+                  value: date,
                 },
               ],
             });
@@ -65,7 +86,7 @@ const IssueVC = () => {
           await sleep(5000);
         }
       } catch (e) {
-        setError(e);
+        console.log(e);
       }
     };
 
@@ -87,30 +108,85 @@ const IssueVC = () => {
           await sleep(5000);
         }
       } catch (e) {
-        setError(e);
+        console.log(e);
       }
     };
 
     await fetchInvitationUrl();
+
+    setQRCode(newInvitation.invitation_url);
+    setIsGenerated(true);
     await stopUntilConnected();
     await stopUntilCredentialIssued();
-  }, []);
+    console.log('invi', invitation);
+  };
 
   return (
     <div>
-      <p>VC 발급을 위해 아래의 QR Code를 어플리케이션에서 스캔해주세요.</p>
-      {(() => {
-        if (loading) return <div>로딩중..</div>;
-        if (error) return <div>에러가 발생했습니다</div>;
-        if (!invitation.invitation_url) return null;
-        return <QRCode value={invitation.invitation_url} />;
-      })()}
       <br />
-      {isConnected ? '연결되었습니다. 어플리케이션에서 VC 정보를 확인해 주세요' : ''}
-      <br />
-      {isCredentialIssued ? '요청하신 Credential이 발급되었습니다.' : ''}
+      <Container>
+        <Row>
+          <Col>
+            {isGenerated ? (
+              <div>
+                <QRCode value={qrCode} />
+                <br />
+                {isConnected ? '연결되었습니다. 어플리케이션에서 VC 정보를 확인해 주세요' : ''}
+                <br />
+                {isCredentialIssued ? '요청하신 Credential이 발급되었습니다.' : ''}
+              </div>
+            ) : (
+              <div>
+                <Form>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control onChange={changeFunc} name="name" placeholder="진행될 콘서트명을 입력해주세요." />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Company</Form.Label>
+                    <Form.Control onChange={changeFunc} name="company" placeholder="콘서트를 주최하는 회사명을 입력해주세요." />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Seat</Form.Label>
+                    <Form.Control onChange={changeFunc} name="seat" placeholder="발급할 좌석을 입력해주세요." />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Date</Form.Label>
+                    <Form.Control onChange={changeFunc} name="date" placeholder="콘서트가 진행되는 날짜를 입력해주세요. (Timestamp)" />
+                  </Form.Group>
+                </Form>
+                <Button onClick={entireIssuanceFlow}>Generate</Button>
+              </div>
+            )}
+          </Col>
+          <Col>
+            {isGenerated ? (
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>콘서트명</th>
+                    <th>주최 회사</th>
+                    <th>좌석</th>
+                    <th>날짜</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{name}</td>
+                    <td>{company}</td>
+                    <td>{seat}</td>
+                    <td>{date}</td>
+                  </tr>
+                </tbody>
+              </Table>
+            ) : (
+              ''
+            )}
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 };
 
-export default IssueVC;
+export default IssueVeramoVC;
