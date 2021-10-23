@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { createInvitation, getConnection, getCredentialVerificationRecords, sendProofRequest } from '../../apis/AxiosWithAcapy';
-import { sleep } from '../../utils/utils';
+import { createInvitation, getConnection, getCredentialVerificationRecords, sendProofRequest } from '../../../apis/AxiosWithAcapy';
+import { sleep } from '../../../utils/utils';
 import QRCode from 'react-qr-code';
 import { Col, Container, Row } from 'react-bootstrap';
-const VerifyVP = () => {
+
+const SuccessIndyVP = () => {
   const [invitation, setInvitation] = useState({});
   const [isConnected, setIsConnected] = useState(false);
   const [isVPRequestSended, setIsVPRequestSended] = useState(false);
@@ -144,4 +145,4 @@ function makeProofRequest(did) {
   };
 }
 
-export default VerifyVP;
+export default SuccessIndyVP;
