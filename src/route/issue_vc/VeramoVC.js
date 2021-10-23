@@ -2,6 +2,7 @@ import QRCode from 'react-qr-code';
 import React, { useState } from 'react';
 import { Button, Col, Container, Form, Row, Table } from 'react-bootstrap';
 import { getVeramoVCJWT } from '../../apis/AxiosWithServer';
+import { convertUtcToTimestamp } from '../../utils/utils';
 
 const IssueVeramoVC = () => {
   const [name, setName] = useState('');
@@ -33,7 +34,12 @@ const IssueVeramoVC = () => {
   const generateVC = async () => {
     console.log(name, company, seat, date);
 
-    const res = await getVeramoVCJWT({ name, company, seat, date });
+    const res = await getVeramoVCJWT({
+      name,
+      company,
+      seat,
+      date: convertUtcToTimestamp(date),
+    });
     console.log(res.data);
     setQRCode(res.data);
     setIsGenerated(true);
@@ -64,7 +70,7 @@ const IssueVeramoVC = () => {
                   </Form.Group>
                   <Form.Group className="mb-3">
                     <Form.Label>Date</Form.Label>
-                    <Form.Control onChange={changeFunc} name="date" placeholder="콘서트가 진행되는 날짜를 입력해주세요. (Timestamp)" />
+                    <Form.Control onChange={changeFunc} name="date" placeholder="콘서트가 진행되는 날짜를 입력해주세요. (yyyy-mm-dd hh:mm)" />
                   </Form.Group>
                 </Form>
                 <Button onClick={generateVC}>Generate</Button>
