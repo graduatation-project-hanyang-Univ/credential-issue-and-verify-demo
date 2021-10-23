@@ -3,10 +3,10 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import { Nav, Navbar } from 'react-bootstrap';
 import IssueVC from './route/issue_vc';
-import VerifyVP from './route/verify_vp';
+import VerifyVP from './route/verify_vp/indy';
 import Home from './route/Home';
 import IssueVeramoVC from './route/issue_vc/VeramoVC';
-import VerifyVeramoVP from './route/verify_vp/VeramoVP';
+import VerifyVeramoVP from './route/verify_vp/veramo';
 
 const PATH = {
   ROOT: '/',

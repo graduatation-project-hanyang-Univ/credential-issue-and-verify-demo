@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
 import QRCode from 'react-qr-code';
-import { getVeramoVPRequestJWT } from '../../apis/AxiosWithServer';
+import { getVeramoVPRequestJWT } from '../../../apis/AxiosWithServer';
 import { Col, Container, Row } from 'react-bootstrap';
 
-const VerifyVeramoVP = () => {
+const FailVeramoVP = () => {
   const [qrCode, setQRCode] = useState(null);
 
   useEffect(async () => {
-    const res = await getVeramoVPRequestJWT();
+    const res = await getVeramoVPRequestJWT(false);
     console.log(res.data);
     setQRCode(res.data);
   }, []);
@@ -28,4 +28,4 @@ const VerifyVeramoVP = () => {
   );
 };
 
-export default VerifyVeramoVP;
+export default FailVeramoVP;
