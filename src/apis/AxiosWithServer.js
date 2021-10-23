@@ -17,8 +17,10 @@ async function getVeramoVCJWT(infos) {
   return res;
 }
 
-async function getVeramoVPRequestJWT() {
-  const res = await axiosWithServer.post('/veramo/qr-code/verification');
+async function getVeramoVPRequestJWT(success) {
+  const res = await axiosWithServer.post('/veramo/qr-code/verification', {
+    success,
+  });
 
   return res;
 }

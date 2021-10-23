@@ -6,7 +6,7 @@ import IssueVC from './route/issue_vc';
 import VerifyVP from './route/verify_vp/indy';
 import Home from './route/Home';
 import IssueVeramoVC from './route/issue_vc/VeramoVC';
-import VerifyVeramoVP from './route/verify_vp/VeramoVP';
+import VerifyVeramoVP from './route/verify_vp/veramo';
 
 const PATH = {
   ROOT: '/',
