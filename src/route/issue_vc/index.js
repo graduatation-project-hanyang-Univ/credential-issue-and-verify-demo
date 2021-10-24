@@ -77,7 +77,7 @@ const IssueVeramoVC = () => {
                 },
                 {
                   name: 'date',
-                  value: convertUtcToTimestamp(date),
+                  value: String(convertUtcToTimestamp(date)),
                 },
               ],
             });
